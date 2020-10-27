@@ -20,6 +20,8 @@ const partsReducer = (state = partsReducerDefaultState, action) => {
                     return el
                 }
             })
+        case 'SET_PARTS':
+            return action.parts
         default:
             return state;
     }

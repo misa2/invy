@@ -9,6 +9,7 @@ import AddPartPage from '../components/AddPartPage'
 import EditPartPage from './../components/EditPartPage'
 import Header from './../components/Header'
 import HelpPage from '../components/HelpPage'
+import LoginPage from './../components/LoginPage'
 
 
 const AppRouter = () => (
@@ -16,7 +17,8 @@ const AppRouter = () => (
         <div>
             <Header />
             <Switch>
-                <Route path="/" component={DashboardPage} exact={true} />
+                <Route path="/" component={LoginPage} exact={true} />
+                <Route path="/dashboard" component={DashboardPage} />
                 <Route path="/inventory" component={InventoryPage} />
                 <Route path="/add_part" component={AddPartPage} />
                 <Route path="/edit_part/:id" component={EditPartPage} />
