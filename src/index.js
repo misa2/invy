@@ -4,8 +4,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { firebase } from './firebase/firebase'
 import store from './store/invyStore'
-import {startAddPart, startSetParts} from './actions/parts'
-
+import { login, logout } from './actions/auth'
+import { startSetParts} from './actions/parts'
+import { history } from './routers/AppRouter'
 // store.dispatch(startAddPart({type: 'Resistor Carbon-film',  value: '2', unit: 'Ohm', quantity: 1, location:'Box 1'}))
 // store.dispatch(startAddPart({type: 'IC DIP', value: 'NE 555', quantity: 1, location:'Box 1'}))
 // store.dispatch(startAddPart({type: 'Resistor Carbon-film',  value: '1', unit: 'Ohm', quantity: 1, location:'Box 1'}))
@@ -14,22 +15,37 @@ import {startAddPart, startSetParts} from './actions/parts'
 // store.dispatch(startAddPart({type: 'IC DIP', value: 'TL041', quantity: 1, location:'Box 2'}))
 // store.dispatch(startAddPart({type: 'IC DIP', value: 'TL082', quantity: 1, location:'Box 2'}))
 
+let hasRendered = false
+const renderApp = () => {
+  if (!hasRendered) {
+    ReactDOM.render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>,
+      document.getElementById('root')
+    );
+    hasRendered = true
+  }
+  
+}
 
 ReactDOM.render(<p>Loading...</p>, document.getElementById('root'))
-store.dispatch(startSetParts()).then(()=> {
 
-  ReactDOM.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-    document.getElementById('root')
-  );
-  
-})
 firebase.auth().onAuthStateChanged( (user) => {
   if (user) {
+    store.dispatch(login(user.uid))
+    store.dispatch(startSetParts()).then(()=> {
+      renderApp()
+      if (history.location.pathname === '/') {
+        history.push('/dashboard')
+      }
+    })
+        
     console.log('log in');
   } else {
+    store.dispatch(logout())
+    renderApp()
+    history.push('/')
     console.log('log out');
   }
 })
