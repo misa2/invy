@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import selectParts from './../selectors/parts'
-import selectPartsContainers from './../selectors/partsContainers'
+import selectPartContainers from './../selectors/partContainers'
 
 export const PartsSummary = ( {partsCount, containersCount}) => {
     const partsWord = partsCount === 1 ? 'part' : 'parts'
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
 
     return {
         partsCount: visibleParts.length,
-        containersCount: selectPartsContainers(visibleParts)
+        containersCount: selectPartContainers(visibleParts).length
     }
 }
 

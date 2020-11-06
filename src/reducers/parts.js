@@ -22,6 +22,10 @@ const partsReducer = (state = partsReducerDefaultState, action) => {
             })
         case 'SET_PARTS':
             return action.parts
+        case 'ADD_SAMPLE_PARTS':
+            return
+        case 'UPDATE_UNIQUE_CONTAINERS':
+            return
         default:
             return state;
     }

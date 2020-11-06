@@ -12,6 +12,7 @@ const EditPartPage = (props) => {
                     props.dispatch(startEditPart(props.part.id, part))
                     props.history.push('/')
                 }}
+                options={props.options}
             />
             <button onClick={ () => {
                 props.dispatch(startRemovePart({id: props.part.id}))
@@ -27,7 +28,8 @@ const mapStateToProps = (state, props) => {
     return {
         part: state.parts.find((part)=>{
             return part.id === props.match.params.id
-        })
+        }),
+        options: state.options
     }
 }
 

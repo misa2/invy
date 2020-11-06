@@ -9,6 +9,6 @@ export const sortByType = () => ({
 export const sortByValue = () => ({
     type: 'SORT_BY_VALUE'
 })
-export const sortByLocation = () => ({
-    type: 'SORT_BY_LOCATION'
+export const sortByContainer = () => ({
+    type: 'SORT_BY_CONTAINER'
 })

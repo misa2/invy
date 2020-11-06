@@ -3,15 +3,21 @@ export default class PartForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            type: props.part ? props.part.type : 'other',
+            type: props.part ? props.part.type : '',
             value: props.part ? props.part.value :  '',
             unit: props.part ? props.part.unit : '',
             quantity: props.part ? props.part.quantity : '',
-            location: props.part ? props.part.location : 'Unassigned',
-            updating : props.part ? true : false
+            container: props.part ? props.part.container : '',
+            updating : props.part ? true : false,
+            typeOptions : props.options.type,
+            unitOptions: props.options.unit,
+            containerOptions: props.options.container
         }
+        
     
     }
+    
+
     onTypeChange = (e) => {
         const type = e.target.value
         this.setState(()=>({type}))
@@ -29,9 +35,9 @@ export default class PartForm extends React.Component {
         if (quantity.match(/^\d*$/))
         this.setState(() => ({quantity}))
     }
-    onLocationChange = (e) => {
-        const location = e.target.value
-        this.setState(() => ({location}))
+    onContainerChange = (e) => {
+        const container = e.target.value
+        this.setState(() => ({container}))
     }
     onSubmit = (e) => {
         e.preventDefault()
@@ -44,8 +50,8 @@ export default class PartForm extends React.Component {
                 type: this.state.type,
                 value: this.state.value,
                 unit: this.state.unit,
-                quantity: this.state.quantity,
-                location: this.state.location
+                quantity: parseInt(this.state.quantity),
+                container: this.state.container
             })
         }
     }
@@ -55,13 +61,7 @@ export default class PartForm extends React.Component {
                 {this.state.error && <p>{this.state.error}</p>}
                 <form onSubmit={this.onSubmit}>
                     <select onChange={this.onTypeChange} value={this.state.type}>
-                        <option value='resistor'>Resistor</option>
-                        <option value='capacitor'>Capacitor</option>
-                        <option value='transistor'>Transistor</option>
-                        <option value='diode'>Diode</option>
-                        <option value='IC'>Transistor</option>
-                        <option value='inductor'>Inductor</option>
-                        <option value='other'>Other</option>
+                        {this.state.typeOptions.map((el_typeOption)=><option value={el_typeOption}>{el_typeOption}</option>)}
                     </select>
                     <input
                         type="text"
@@ -71,15 +71,7 @@ export default class PartForm extends React.Component {
                         autoFocus
                     />
                     <select onChange={this.onUnitChange} value={this.state.unit}>
-                        <option value=''></option>
-                        <option value='Ohm'>Ohm</option>
-                        <option value='KOhm'>KOhm</option>
-                        <option value='MOhm'>MOhm</option>
-                        <option value='pF'>pF</option>
-                        <option value='nF'>nF</option>
-                        <option value='uF'>uF</option>
-                        <option value='uH'>nF</option>
-                        <option value='mH'>uF</option>
+                        {this.state.unitOptions.map((el_unitOption)=><option value={el_unitOption}>{el_unitOption}</option>)}
                     </select>                    
                     <input
                         type="text"
@@ -88,12 +80,9 @@ export default class PartForm extends React.Component {
                         onChange={this.onQuantityChange}
 
                     />
-                    <input
-                        type="text"
-                        placeholder="Location"
-                        value={this.state.location}
-                        onChange={this.onLocationChange}
-                    />
+                    <select onChange={this.onContainerChange} value={this.state.container}>
+                        {this.state.containerOptions.map((el_containerOption)=><option value={el_containerOption}>{el_containerOption}</option>)}
+                    </select>
                     <button>{this.state.updating ? 'Update part' : 'Add part'}</button>
                 </form>
             </div>

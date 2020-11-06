@@ -13,7 +13,7 @@ export class  AddPartPage extends React.Component {
         return (
             <div>
                 <h1>Add Part</h1>
-                <PartForm onSubmit={this.onSubmit}/>
+                <PartForm onSubmit={this.onSubmit} options={this.props.options}/>
             </div>         
         )
     }
@@ -23,5 +23,10 @@ export class  AddPartPage extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
     startAddPart: (part) => dispatch(startAddPart(part))
 })
+const mapStateToProps = (state, props) => {
+    return {
+        options: state.options
+    }
+}
 
-export default connect(undefined, mapDispatchToProps)(AddPartPage)
+export default connect(mapStateToProps, mapDispatchToProps)(AddPartPage)

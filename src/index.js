@@ -7,13 +7,8 @@ import store from './store/invyStore'
 import { login, logout } from './actions/auth'
 import { startSetParts} from './actions/parts'
 import { history } from './routers/AppRouter'
-// store.dispatch(startAddPart({type: 'Resistor Carbon-film',  value: '2', unit: 'Ohm', quantity: 1, location:'Box 1'}))
-// store.dispatch(startAddPart({type: 'IC DIP', value: 'NE 555', quantity: 1, location:'Box 1'}))
-// store.dispatch(startAddPart({type: 'Resistor Carbon-film',  value: '1', unit: 'Ohm', quantity: 1, location:'Box 1'}))
-// store.dispatch(startAddPart({type: 'IC DIP', value: '74LS321', quantity: 1, location:'Box 2'}))
-// store.dispatch(startAddPart({type: 'Resistor SMD 1206',  value: '40', unit: 'kOhm', quantity: 1, location:'Box 1'}))
-// store.dispatch(startAddPart({type: 'IC DIP', value: 'TL041', quantity: 1, location:'Box 2'}))
-// store.dispatch(startAddPart({type: 'IC DIP', value: 'TL082', quantity: 1, location:'Box 2'}))
+import { updateOptions } from './actions/options';
+
 
 let hasRendered = false
 const renderApp = () => {

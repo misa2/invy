@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {setValueFilter,  sortByLocation, sortByType, sortByValue} from './../actions/filters'
+import {setValueFilter,  sortByContainer, sortByType, sortByValue} from './../actions/filters'
 
 const PartsListFilters = (props) => (
     <div>
@@ -19,8 +19,8 @@ const PartsListFilters = (props) => (
                     case 'value':
                         props.dispatch(sortByValue())
                         break
-                    case 'location':
-                        props.dispatch(sortByLocation())
+                    case 'container':
+                        props.dispatch(sortByContainer())
                         break
                     default:
                         break
@@ -28,7 +28,7 @@ const PartsListFilters = (props) => (
             }}>
             <option value='type'>Type</option>
             <option value='value'>Value</option>
-            <option value='location'>Location</option>
+            <option value='container'>Container</option>
         </select>
     </div>
 )

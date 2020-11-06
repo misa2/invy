@@ -1,4 +1,5 @@
 //import {v4 as uuid} from 'uuid'
+import { updateOptions } from './options'
 import database from './../firebase/firebase'
 const addPart = ( part ) => ({
     type: 'ADD_PART',
@@ -6,16 +7,18 @@ const addPart = ( part ) => ({
 })
 
 export const startAddPart = (partsData = {}) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid
         const {
             type = 'other', 
             value = '', 
             unit = '',
             quantity = '', 
-            location = 'Unassigned'
+            container = ''
         } = partsData;
-        const part = {type, value, unit, quantity, location}
-        database.ref('parts').push(part).then( (ref) => {
+        const part = {type, value, unit, quantity, container}
+        console.log(part)
+        database.ref(`users/${uid}/parts`).push(part).then( (ref) => {
             dispatch(addPart({
                 id: ref.key,
                 ...part
@@ -30,8 +33,9 @@ const removePart = ({ id } = {} ) => ({
 })
 
 export const startRemovePart = ( {id} = {}) => {
-    return (dispatch) => {
-        return database.ref(`parts/${id}`).remove().then(() => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid
+        return database.ref(`users/${uid}/parts/${id}`).remove().then(() => {
             dispatch(removePart({id}))
         })
     }
@@ -43,8 +47,9 @@ const editPart = (id, updates) => ({
     updates
 })
 export const startEditPart = ( id, updates) => {
-    return (dispatch) => {
-        return database.ref(`parts/${id}`).update(updates).then(() => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid
+        return database.ref(`users/${uid}/parts/${id}`).update(updates).then(() => {
             dispatch(editPart(id, updates))
         })
     }
@@ -57,8 +62,9 @@ export const setParts = (parts) => ({
 })
 
 export const startSetParts = () => {
-    return(dispatch) => {
-        return database.ref('parts').once('value').then((snapshot) => {
+    return(dispatch, getState) => {
+        const uid = getState().auth.uid
+        return database.ref(`users/${uid}/parts`).once('value').then((snapshot) => {
             const parts = []
             snapshot.forEach(el_snapshot => {
                 parts.push({
@@ -67,10 +73,27 @@ export const startSetParts = () => {
                 })  
             })
             dispatch(setParts(parts))
+            dispatch(updateOptions(parts))
         })
     }
 }
 
+export const addSampleParts = () => ({
+    type: 'ADD_SAMPLE_PARTS'
+})
+
+export const startAddSampleParts = () => {
+    return(dispatch) => {
+        dispatch(startAddPart({type: 'Resistor Carbon-film',  value: '2', unit: 'Ohm', quantity: 1, container:'Box 1'}))
+        dispatch(startAddPart({type: 'IC DIP', value: 'NE 555', unit:'', quantity: 1, container:'Box 1'}))
+        dispatch(startAddPart({type: 'Resistor Carbon-film',  value: '1', unit: 'Ohm', quantity: 1, container:'Box 1'}))
+        dispatch(startAddPart({type: 'IC DIP', value: '74LS321', unit:'', quantity: 1, container:'Box 2'}))
+        dispatch(startAddPart({type: 'Resistor SMD 1206',  value: '40', unit: 'kOhm', quantity: 1, container:'Box 1'}))
+        dispatch(startAddPart({type: 'IC DIP', value: 'TL041', unit:'', quantity: 1, container:'Box 2'}))
+        dispatch(startAddPart({type: 'IC DIP', value: 'TL082', unit:'', quantity: 1, container:''}))
+        dispatch(startSetParts())
+    }
+}
 
 
 export {addPart, removePart, editPart}

@@ -1,7 +1,7 @@
 const filtersReducerDeafultState = {
     type: '',
     value: '',
-    location: '',
+    container: '',
     sortBy: ''
 }
 const filtersReducer = (state = filtersReducerDeafultState, action) => {
@@ -22,10 +22,10 @@ const filtersReducer = (state = filtersReducerDeafultState, action) => {
                 ...state,
                 sortBy: 'value'
             }
-        case 'SORT_BY_LOCATION':
+        case 'SORT_BY_CONTAINER':
             return {
                 ...state,
-                sortBy: 'location'
+                sortBy: 'container'
             }
         default:
             return state
