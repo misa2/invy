@@ -24,13 +24,7 @@ var firebaseConfig = {
     measurementId: "G-SD1DNLRDEV"
 }
 
-try {
-    firebase.initializeApp(firebaseConfig);
-}
-catch(error)
-{
-    throw new Error('Firebase initialization error')
-}
+firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 export { firebase, googleAuthProvider, database as default};
