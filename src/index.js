@@ -7,7 +7,7 @@ import store from './store/invyStore'
 import { login, logout } from './actions/auth'
 import { startSetParts} from './actions/parts'
 import { history } from './routers/AppRouter'
-import { updateOptions } from './actions/options';
+//import { updateOptions } from './actions/options';
 
 
 let hasRendered = false

@@ -1,18 +1,19 @@
 .box-layout {
     align-items: center;
-    background: url('/images/bg.jpg');
-    background-size: cover;
-    display: flex;
+    background: url('/images/background.jpg');
+    background-size: auto;
+    color: $off-white;
+    display: flex; 
     height: 100vh;
     width: 100vw;
     justify-content: center;
 }
 
 .box-layout__box {
-    background: fade-out($color: white, $amount: .15);
+    background: fade-out($color: $color-primary, $amount: .05);
     border-radius: 3px;
     text-align: center;
-    width: 25rem;
+    width: 28rem;
     padding: $l-size $m-size;
 }
 
