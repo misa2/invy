@@ -1,6 +1,6 @@
 .button {
     background: $color-accent;
-    color: white;
+    color: $off-white;
     border: none;
     display: inline-block;
     font-weight: 300;
@@ -10,6 +10,14 @@
     text-decoration: none;
 }
 
+.button--multiple {
+    @extend .button;
+    margin: 0 $s-size $s-size 0;
+}
+.button--red{
+    @extend .button;
+    background: $washed-red;
+}
 .button--link {
     background: none;
 }

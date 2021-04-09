@@ -17,13 +17,14 @@ export const startAddPart = (partsData = {}) => {
             container = ''
         } = partsData;
         const part = {type, value, unit, quantity, container}
-        console.log(part)
-        database.ref(`users/${uid}/parts`).push(part).then( (ref) => {
-            dispatch(addPart({
-                id: ref.key,
-                ...part
-            }))
-        })
+        database.ref(`users/${uid}/parts`).push(part)
+            .then( (ref) => {
+                dispatch(addPart({
+                    id: ref.key,
+                    ...part
+                }))
+           })
+           .catch((err) => console.log(err))
     }
 }
 
@@ -35,9 +36,11 @@ const removePart = ({ id } = {} ) => ({
 export const startRemovePart = ( {id} = {}) => {
     return (dispatch, getState) => {
         const uid = getState().auth.uid
-        return database.ref(`users/${uid}/parts/${id}`).remove().then(() => {
+        return database.ref(`users/${uid}/parts/${id}`).remove()
+        .then(() => {
             dispatch(removePart({id}))
         })
+        .catch((err) => console.log(err))
     }
 }
 
@@ -49,9 +52,11 @@ const editPart = (id, updates) => ({
 export const startEditPart = ( id, updates) => {
     return (dispatch, getState) => {
         const uid = getState().auth.uid
-        return database.ref(`users/${uid}/parts/${id}`).update(updates).then(() => {
-            dispatch(editPart(id, updates))
-        })
+        return database.ref(`users/${uid}/parts/${id}`).update(updates)
+            .then(() => {
+                dispatch(editPart(id, updates))
+            })
+            .catch((err) => console.log(err))
     }
 }
 

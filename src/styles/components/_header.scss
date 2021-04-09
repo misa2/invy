@@ -7,11 +7,11 @@
 .header__content__left {
     
     
-    padding: $s-size $s-size;
+    padding: 0 $s-size
 }
 .header__content__right {
 
-    padding: $s-size $s-size;
+    //padding: $s-size $s-size;
   
 }
 .header__content__right__item {
@@ -19,8 +19,9 @@
     margin: $s-size $s-size;
 }
 .header__title {
-    color: white;
+    color: $color-primary-text;
     text-decoration: none;
+    text-align: left ;
     h1 {
         margin: 0;
     }

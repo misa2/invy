@@ -12,8 +12,12 @@ export class  HelpPage extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Help page</h1>
+            <div >
+                <div className="page-header">
+                    <div className="content-container">
+                        <h1>Help page</h1>
+                    </div>
+                </div>
                 <p>Invy is an application that helps you organize and locate small things in multiple containers. Your data is stored in
                      a cloud database called <a href='https://firebase.google.com/'>Firebase</a>.</p>
                      <p></p>

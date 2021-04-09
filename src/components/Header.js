@@ -12,8 +12,8 @@ export const Header = ({ startLogout }) => (
                 </Link>
             </div>
             <div className="header__content__right">    
-                <Link className="button button--link header__content__right__item" to="/help">Help</Link>
-                <button className="button button--link header__content__right__item" onClick={startLogout}>Logout</button>
+                <Link className="button-header button--link header__content__right__item" to="/help">Help</Link>
+                <button className="button-header button--link header__content__right__item" onClick={startLogout}>Logout</button>
             </div>    
             
         

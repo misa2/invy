@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import InputModal from './InputModal'
 import { addPartUnit, addPartContainer, addPartType } from '../actions/options'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 const PartForm = (props) => {
     const [type, setType] = useState(props.part ? props.part.type : '')
-    const [value, setValue] = useState( props.part ? props.part.value :  '')
-    const [unit, setUnit] = useState( props.part ? props.part.unit : '')
-    const [quantity, setQuantity] = useState(props.part ? props.part.quantity : '')
+    const [value, setValue] = useState(props.part ? props.part.value : '')
+    const [unit, setUnit] = useState(props.part ? props.part.unit : '')
+    const [quantity, setQuantity] = useState(props.part ? props.part.quantity : 0)
     const [container, setContainer] = useState(props.part ? props.part.container : '')
     const [updating] = useState(props.part ? true : false)
     const [typeOptions, setTypeOptions] = useState(props.options.type)
@@ -19,8 +19,8 @@ const PartForm = (props) => {
     const [inputPlaceholder, setInputPlaceholder] = useState('')
     const [inputValue, setInputValue] = useState('')
     const [error, setError] = useState('')
-    
-        
+
+
     const onTypeChange = (e) => {
         setType(e.target.value)
     }
@@ -32,15 +32,15 @@ const PartForm = (props) => {
         setModalOpen(true)
     }
     const addNewTypeOptionUpdater = (value) => {
-        if(value){
-            if(typeOptions.filter((el_typeOption) => el_typeOption === value).length === 0) {
+        if (value) {
+            if (typeOptions.filter((el_typeOption) => el_typeOption === value).length === 0) {
                 setTypeOptions(typeOptions.concat(value))
                 props.addPartType(value)
             }
         }
         setModalOpen(false)
     }
-    
+
     const onValueChange = (e) => {
         setValue(e.target.value)
     }
@@ -56,8 +56,8 @@ const PartForm = (props) => {
     }
 
     const addNewUnitOptionUpdater = (value) => {
-        if(value){
-            if(unitOptions.filter((el_unitOption) => el_unitOption === value).length === 0) {
+        if (value) {
+            if (unitOptions.filter((el_unitOption) => el_unitOption === value).length === 0) {
                 setUnitOptions(unitOptions.concat(value))
                 props.addPartUnit(value)
             }
@@ -67,7 +67,7 @@ const PartForm = (props) => {
     const onQuantityChange = (e) => {
         const quantity = e.target.value
         if (quantity.match(/^\d*$/))
-            setQuantity(quantity)
+            setQuantity(parseInt(quantity))
     }
     const onContainerChange = (e) => {
         setContainer(e.target.value)
@@ -81,8 +81,8 @@ const PartForm = (props) => {
     }
 
     const addNewContainerOptionUpdater = (value) => {
-        if(value){
-            if(containerOptions.filter((el_containerOption) => el_containerOption === value).length === 0) {
+        if (value) {
+            if (containerOptions.filter((el_containerOption) => el_containerOption === value).length === 0) {
                 setContainerOptions(containerOptions.concat(value))
                 props.addPartContainer(value)
             }
@@ -103,12 +103,12 @@ const PartForm = (props) => {
     }
     const onSubmit = (e) => {
         e.preventDefault()
-        if (!value) {
-            setError('Please provide part name or value')
-        }
+        if (!value) setError('Please provide part name or value')
+        else if(!type) setError('Please provide part type')
+        else if(!quantity) setError('Please provide part quantity')
+        else if(!container) setError('Please provide part location')
         else {
             setError('')
-            setQuantity(parseInt(quantity))
             props.onSubmit({
                 type,
                 value,
@@ -118,48 +118,65 @@ const PartForm = (props) => {
             })
         }
     }
-    
-    return (
-        <div>
-            {error && <p>{error}</p>}
-            <form onSubmit={onSubmit}>
-                <InputModal 
-                    modalOpen={modalOpen}
-                    modalCaption={modalCaption}
-                    inputCaption={inputCaption}
-                    inputPlaceholder={inputPlaceholder}
-                    inputValue={inputValue}
-                    modalUpdaterFn={updaterFn(inputPlaceholder)}
-                ></InputModal>
-                <select onChange={onTypeChange} value={type}>
-                    {typeOptions.map((el_typeOption)=><option key={el_typeOption} value={el_typeOption}>{el_typeOption}</option>)}
-                </select>
-                <button type={"button"} onClick={onAddNewTypeClick}>Add New type</button>
-                <input
-                    type="text"
-                    placeholder="Value"
-                    value={value}
-                    onChange={onValueChange}
-                    autoFocus
-                />
-                <select onChange={onUnitChange} value={unit}>
-                    {unitOptions.map((el_unitOption)=><option key={el_unitOption} value={el_unitOption}>{el_unitOption}</option>)}
-                </select>                    
-                <button type={"button"} onClick={onAddNewUnitClick}>Add New unit</button>
-                <input
-                    type="text"
-                    placeholder="Quantity"
-                    value={quantity}
-                    onChange={onQuantityChange}
 
-                />
-                <select onChange={onContainerChange} value={container}>
-                    {containerOptions.map((el_containerOption)=><option key={el_containerOption} value={el_containerOption}>{el_containerOption}</option>)}
-                </select>
-                <button type={"button"} onClick={onAddNewContainerClick}>Add New container</button>
-                <button type={"submit"}>{updating ? 'Update part' : 'Add part'}</button>
-            </form>
-        </div>
+    return (
+
+
+        <form className="form" onSubmit={onSubmit}>
+            {error && <p className="form__error">{error}</p>}
+            <InputModal
+                modalOpen={modalOpen}
+                modalCaption={modalCaption}
+                inputCaption={inputCaption}
+                inputPlaceholder={inputPlaceholder}
+                inputValue={inputValue}
+                modalUpdaterFn={updaterFn(inputPlaceholder)}
+            ></InputModal>
+            <select onChange={onTypeChange}
+                className="select"
+                value={type}>
+                {typeOptions.map((el_typeOption) => <option key={el_typeOption} value={el_typeOption}>{el_typeOption}</option>)}
+            </select>
+
+            <input
+                className="text-input"
+                type="text"
+                placeholder="Value"
+                value={value}
+                onChange={onValueChange}
+                autoFocus
+            />
+            <select onChange={onUnitChange}
+                value={unit}
+                className="select">
+                {unitOptions.map((el_unitOption) => <option key={el_unitOption} value={el_unitOption}>{el_unitOption}</option>)}
+            </select>
+
+            <input
+                className="text-input"
+                type="text"
+                placeholder="Quantity"
+                value={quantity}
+                onChange={onQuantityChange}
+
+            />
+            <select onChange={onContainerChange}
+                className="select"
+                value={container}>
+                {containerOptions.map((el_containerOption) => <option key={el_containerOption} value={el_containerOption}>{el_containerOption}</option>)}
+            </select>
+            <div>
+                <button className="button" type={"submit"}>{updating ? 'Update part' : 'Add part'}</button>
+            </div>
+            <div>
+                <button className="button--multiple" type={"button"} onClick={onAddNewTypeClick}>Add New type</button>
+                <button className="button--multiple" type={"button"} onClick={onAddNewContainerClick}>Add New container</button>
+                <button className="button--multiple" type={"button"} onClick={onAddNewUnitClick}>Add New unit</button>
+            </div>
+
+
+        </form>
+
     )
 }
 const mapDispatchToProps = (dispatch) => ({
