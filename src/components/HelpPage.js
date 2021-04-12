@@ -15,18 +15,20 @@ export class  HelpPage extends React.Component {
             <div >
                 <div className="page-header">
                     <div className="content-container">
-                        <h1>Help page</h1>
+                        <h1 className="page-header__title">Help page</h1>
                     </div>
                 </div>
-                <p>Invy is an application that helps you organize and locate small things in multiple containers. Your data is stored in
-                     a cloud database called <a href='https://firebase.google.com/'>Firebase</a>.</p>
-                     <p></p>
-                    <p>You can define types for things that you are tracking, so you can quickly filter what you are looking for.
-                     You can also define units, and keep record of quantity. Also, things can be stored in multiple containers, 
-                     that you can name approprietly.</p>
-                <p></p>
-                <p>Use button bellow to add sample data</p>
-                <button onClick={this.onClick}>Add sample data</button>
+                <div className="content-container">
+                    <p>Invy is an application that helps you organize and locate small things like spare parts. Your data is stored in
+                        a cloud database called <a href='https://firebase.google.com/'>Firebase</a>.</p>
+                        <p></p>
+                        <p>You can define types for things that you are tracking, so you can quickly filter what you are looking for.
+                        You can also define units, and keep record of quantity. Also, tracked parts can be stored in multiple containers, 
+                        that you can name approprietly.</p>
+                    <p></p>
+                    <p>Use button bellow to add sample data</p>
+                    <button className="button" onClick={this.onClick}>Add sample data</button>
+                </div>
             </div>         
         )
     }

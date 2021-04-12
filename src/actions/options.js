@@ -15,9 +15,9 @@ export const addPartContainer = ( partContainer ) => ({
 
 export const updateOptions = (parts) => {
     let updatedOptions = {
-        type: ['Resistor', 'Capacitor', 'Transistor', 'Diode', 'IC', 'Inductor', ''],
-        unit: ['Ohm', 'KOhm', 'MOhm', 'pF', 'nF', 'uF', 'uH', 'mH', ''],
-        container: ['']
+        type: ['Resistor', 'Capacitor', 'Transistor', 'Diode', 'IC', 'Inductor'],
+        unit: ['Ohm', 'KOhm', 'MOhm', 'pF', 'nF', 'uF', 'uH', 'mH', 'N/A'],
+        container: ['Box 1']
     }
     if (parts) {
         parts.forEach((el_part) => {

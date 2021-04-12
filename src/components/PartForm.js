@@ -7,7 +7,7 @@ const PartForm = (props) => {
     const [type, setType] = useState(props.part ? props.part.type : '')
     const [value, setValue] = useState(props.part ? props.part.value : '')
     const [unit, setUnit] = useState(props.part ? props.part.unit : '')
-    const [quantity, setQuantity] = useState(props.part ? props.part.quantity : 0)
+    const [quantity, setQuantity] = useState(props.part ? props.part.quantity : undefined)
     const [container, setContainer] = useState(props.part ? props.part.container : '')
     const [updating] = useState(props.part ? true : false)
     const [typeOptions, setTypeOptions] = useState(props.options.type)
@@ -68,6 +68,8 @@ const PartForm = (props) => {
         const quantity = e.target.value
         if (quantity.match(/^\d*$/))
             setQuantity(parseInt(quantity))
+        else
+            setQuantity('')
     }
     const onContainerChange = (e) => {
         setContainer(e.target.value)
@@ -135,13 +137,14 @@ const PartForm = (props) => {
             <select onChange={onTypeChange}
                 className="select"
                 value={type}>
+                <option hidden value="">Select type</option>
                 {typeOptions.map((el_typeOption) => <option key={el_typeOption} value={el_typeOption}>{el_typeOption}</option>)}
             </select>
 
             <input
                 className="text-input"
                 type="text"
-                placeholder="Value"
+                placeholder="Value or name"
                 value={value}
                 onChange={onValueChange}
                 autoFocus
@@ -149,6 +152,7 @@ const PartForm = (props) => {
             <select onChange={onUnitChange}
                 value={unit}
                 className="select">
+                <option hidden value="">Select unit</option>
                 {unitOptions.map((el_unitOption) => <option key={el_unitOption} value={el_unitOption}>{el_unitOption}</option>)}
             </select>
 
@@ -163,6 +167,7 @@ const PartForm = (props) => {
             <select onChange={onContainerChange}
                 className="select"
                 value={container}>
+                <option hidden value="">Select container</option>
                 {containerOptions.map((el_containerOption) => <option key={el_containerOption} value={el_containerOption}>{el_containerOption}</option>)}
             </select>
             <div>

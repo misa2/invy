@@ -90,12 +90,12 @@ export const addSampleParts = () => ({
 export const startAddSampleParts = () => {
     return(dispatch) => {
         dispatch(startAddPart({type: 'Resistor Carbon-film',  value: '2', unit: 'Ohm', quantity: 1, container:'Box 1'}))
-        dispatch(startAddPart({type: 'IC DIP', value: 'NE 555', unit:'', quantity: 1, container:'Box 1'}))
+        dispatch(startAddPart({type: 'IC DIP', value: 'NE 555', unit:'N/A', quantity: 1, container:'Box 1'}))
         dispatch(startAddPart({type: 'Resistor Carbon-film',  value: '1', unit: 'Ohm', quantity: 1, container:'Box 1'}))
-        dispatch(startAddPart({type: 'IC DIP', value: '74LS321', unit:'', quantity: 1, container:'Box 2'}))
+        dispatch(startAddPart({type: 'IC DIP', value: '74LS321', unit:'N/A', quantity: 1, container:'Box 2'}))
         dispatch(startAddPart({type: 'Resistor SMD 1206',  value: '40', unit: 'kOhm', quantity: 1, container:'Box 1'}))
-        dispatch(startAddPart({type: 'IC DIP', value: 'TL041', unit:'', quantity: 1, container:'Box 2'}))
-        dispatch(startAddPart({type: 'IC DIP', value: 'TL082', unit:'', quantity: 1, container:''}))
+        dispatch(startAddPart({type: 'IC DIP', value: 'TL041', unit:'N/A', quantity: 1, container:'Box 2'}))
+        dispatch(startAddPart({type: 'IC DIP', value: 'TL082', unit:'N/A', quantity: 1, container:'Box 2'}))
         dispatch(startSetParts())
     }
 }
